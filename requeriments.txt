@@ -1,0 +1,2 @@
+# Dependencias del proyecto Agua Alerta Comunitaria
+# (Agrega aquí librerías si se instalan paquetes con pip en el futuro)
