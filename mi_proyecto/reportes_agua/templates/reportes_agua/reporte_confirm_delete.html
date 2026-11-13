@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Remoción de Datos de Infraestructura{% endblock %}
+{% block content %}
+<div class="card glass-panel p-5 mx-auto text-center shadow-lg border border-danger border-opacity-20" style="max-width: 550px;">
+    <div class="text-danger fs-1 mb-3">⚠️</div>
+    <h2 class="text-danger fw-bold mb-3">¿Confirmar Baja de Registro?</h2>
+    <p class="text-light">Está a punto de remover permanentemente de tu base de datos el **Incidente #{{ reporte.id_reporte }}**.</p>
+    <p class="text-white-50 small bg-danger bg-opacity-10 p-3 rounded-3 border border-danger border-opacity-10">Esta acción purgará los registros asociados de forma definitiva en SQL Server. No se podrá revertir.</p>
+    
+    <!-- Formulario al final de reporte_confirm_delete.html -->
+    <form method="POST" class="mt-4 pt-3 border-top border-secondary d-flex justify-content-around">
+     {% csrf_token %}
+     <a href="{% url 'reporte_listar' %}" class="btn-cancelar-visible">Cancelar Operación</a>
+     <button type="submit" class="btn btn-danger px-4 rounded-pill shadow">Confirmar Eliminación</button>
+    </form>
+
+</div>
+{% endblock %}

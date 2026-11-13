@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}{% if reporte %}Editar Reporte Hídrico{% else %}Nuevo Reporte de Agua{% endif %}{% endblock %}
+{% block content %}
+<!-- CONTENEDOR FLUIDO MAESTRO: ANULA EL BLOQUEO A LA IZQUIERDA DEL ARCHIVO BASE -->
+<div style="width: 100vw; max-width: 100%; display: flex; justify-content: center; align-items: center; padding: 20px 0; clear: both; margin: 0 auto;">
+    
+    <!-- TARJETA GLASS AJUSTABLE: CRECE DINÁMICAMENTE SEGÚN LA PANTALLA HASTA 950PX -->
+    <div class="card glass-panel p-4 p-md-5 shadow-lg text-start" style="width: 95% !important; max-width: 950px !important; margin: 0 auto !important; float: none !important; color: #fff; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; display: block !important;">
+        
+        <div class="text-center mb-4">
+            <div class="fs-1 mb-2">💧</div>
+            <h2 class="fw-bold text-info">
+                {% if reporte %}Modificar Incidente #{{ reporte.id_reporte }}{% else %}Registrar Nuevo Incidente{% endif %}
+            </h2>
+            <p class="text-muted small">Complete los datos del reporte hídrico para la base de datos SQL Server.</p>
+        </div>
+        
+        <!-- Formulario configurado para transferencia multimedia -->
+        <form method="POST" enctype="multipart/form-data" action="{% if reporte %}{% url 'reporte_editar' reporte.id_reporte %}{% else %}{% url 'reporte_crear' %}{% endif %}" class="mt-3">
+            {% csrf_token %}
+            
+            <!-- Campo de Descripción Expandido al 100% -->
+            <div class="mb-4">
+                <label for="descripcion" class="form-label fw-semibold text-light">Descripción del Suceso:</label>
+                <textarea name="descripcion" id="descripcion" rows="4" class="form-control bg-dark text-white border-secondary w-100" placeholder="Detalle la fuga, daño o anomalía encontrada..." required style="min-width: 100%;">{% if reporte %}{{ reporte.descripcion }}{% endif %}</textarea>
+            </div>
+            
+            <!-- Grid del Municipio y la Prioridad Adaptable -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label for="municipio" class="form-label fw-semibold text-light">Municipio:</label>
+                    <input type="text" name="municipio" id="municipio" class="form-control bg-dark text-white border-secondary w-100" placeholder="Ej. Central" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="prioridad" class="form-label fw-semibold text-light">Nivel de Prioridad:</label>
+                    <select name="prioridad" id="prioridad" class="form-select bg-dark text-white border-secondary w-100">
+                        <option value="Baja" {% if reporte.prioridad == "Baja" %}selected{% endif %}>Baja (Monitoreo Preventivo)</option>
+                        <option value="Media" {% if reporte.prioridad == "Media" or not reporte %}selected{% endif %}>Media (Atención Estándar)</option>
+                        <option value="Alta" {% if reporte.prioridad == "Alta" %}selected{% endif %}>Alta (Urgencia / Desborde)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Campo de Dirección Expandido al 100% -->
+            <div class="mb-4">
+                <label for="direccion_exacta" class="form-label fw-semibold text-light">Dirección Exacta / Referencia:</label>
+                <input type="text" name="direccion_exacta" id="direccion_exacta" class="form-control bg-dark text-white border-secondary w-100" placeholder="Calle, pasaje o número de zona..." required>
+            </div>
+            
+            <!-- Campo Multimedia Estilizado -->
+            <div class="mb-4 p-3 rounded border border-secondary border-opacity-50" style="background: rgba(255,255,255,0.03);">
+                <label for="imagen" class="form-label fw-semibold text-info">📸 Adjuntar Evidencia Fotográfica:</label>
+                <input type="file" name="imagen" id="imagen" accept="image/*" class="form-control bg-dark text-white border-secondary w-100" required>
+                <div class="form-text text-muted small mt-1">Selecciona una imagen clara del desperfecto hídrico antes de guardar.</div>
+            </div>
+            
+            <!-- Botonera Centrada y Limpia -->
+            <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top border-secondary">
+                <a href="{% url 'reporte_listar' %}" class="btn btn-outline-secondary px-4 rounded-pill">Cancelar</a>
+                <button type="submit" class="btn btn-info text-dark fw-bold px-4 rounded-pill shadow">
+                    {% if reporte %}Guardar Cambios{% else %}Crear Reporte Físico{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoAgua - Panel de Control{% endblock %}</title>
+    
+    <!-- CSS de Bootstrap de Respaldo -->
+    <link href="https://cloudflare.com" rel="stylesheet">
+    
+    <!-- RUTA ABSOLUTA REFORZADA CONTRA ERRORES 404 -->
+    <link rel="stylesheet" href="/static/css/estilo.css">
+</head>
+<body>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="custom-navbar shadow-sm mb-5">
+        <a href="{% url 'reporte_listar' %}" style="font-size: 24px; font-weight: bold; color: #00b4d8; text-decoration: none;">💧 EcoAgua</a>
+        <ul>
+            <li><a href="{% url 'reporte_inicio' %}">Inicio</a></li>
+            <li><a href="{% url 'reporte_listar' %}">Panel de Reportes</a></li>
+            <li><a href="{% url 'reporte_crear' %}" class="btn-glow-primary">+ Reportar Daño</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL DEL SITIO -->
+    <div class="container pb-5">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show text-white border-0 shadow-lg mb-4" role="alert" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);">
+                    {{ message }}
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- SCRIPTS INTEGRADOS CON RUTA ABSOLUTA -->
+    <script src="https://cloudflare.com"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

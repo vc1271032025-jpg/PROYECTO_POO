@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Ficha Técnica Integral - Reporte #{{ reporte.id_reporte }}{% endblock %}
+{% block content %}
+<!-- CONTENEDOR CON FUERZA ABSOLUTA PARA ELIMINAR RESTRICCIONES DE ANCHO DEL PADRE -->
+<div style="width: 100vw; max-width: 100%; display: flex; justify-content: center; align-items: center; margin-left: auto; margin-right: auto; padding: 10px 0; clear: both;">
+    
+    <!-- TARJETA CON ESTILOS INLINE INMUTABLES PARA FORZAR EL ANCHO Y EL CENTRADO -->
+    <div class="card glass-panel p-5 shadow-lg text-start" style="width: 100% !important; max-width: 950px !important; margin: 0 auto !important; float: none !important; color: #fff; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; display: block !important;">
+        
+        <!-- Encabezado de la Ficha Técnica -->
+        <div class="border-bottom border-secondary pb-3 mb-4 d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-info mb-1" style="margin: 0;">Ficha Técnica Integral</h2>
+                <span class="text-muted small">Código Único de Auditoría: <strong>SQL_REP_{{ reporte.id_reporte }}</strong></span>
+            </div>
+            <div>
+                <span class="badge {% if reporte.estado == 'Pendiente' %}bg-warning text-dark{% else %}bg-success{% endif %} px-3 py-2 rounded-pill fs-6">
+                    Estado: {{ reporte.estado }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Cuerpo con los detalles del reporte -->
+        <div class="mb-4">
+            <h5 class="text-light fw-semibold mb-2">📝 Descripción del Evento</h5>
+            <div class="p-3 rounded bg-dark bg-opacity-50 text-white border border-secondary mb-4" style="white-space: pre-line;">
+                {{ reporte.descripcion }}
+            </div>
+        </div>
+
+        <!-- Detalles Técnicos organizados en Grid -->
+        <div class="row g-3 mb-4 border-top border-secondary pt-3">
+            <div class="col-md-6">
+                <span class="text-muted d-block small">Categoría / Tipo de Problema</span>
+                <strong class="text-white fs-6">💧 {{ reporte.id_tipo_incidente.nombre_tipo }}</strong>
+            </div>
+            <div class="col-md-6">
+                <span class="text-muted d-block small">Nivel de Alerta</span>
+                <strong class="{% if reporte.prioridad == 'Alta' %}text-danger{% elif reporte.prioridad == 'Media' %}text-warning{% else %}text-info{% endif %} fs-6">
+                    ⚠️ {{ reporte.prioridad }}
+                </strong>
+            </div>
+        </div>
+
+        <!-- Sección de Ubicación Detallada -->
+        <div class="mb-4 border-top border-secondary pt-3">
+            <span class="text-muted d-block small">Ubicación Registrada</span>
+            <strong class="text-white fs-6">📍 {{ reporte.id_ubicacion.municipio }} — {{ reporte.id_ubicacion.direccion_exacta }}</strong>
+        </div>
+
+        <!-- Sección de Tiempos -->
+        <div class="mb-4 border-top border-secondary pt-3">
+            <span class="text-muted d-block small">Fecha y Hora de Registro</span>
+            <strong class="text-light fs-6">📅 {{ reporte.fecha_registro|date:"d/m/Y H:i" }} {{ reporte.fecha_registro|date:"T" }}</strong>
+        </div>
+
+        <!-- SECCIÓN DE LA IMAGEN DE EVIDENCIA ADJUNTA -->
+        <div class="mt-4 pt-3 border-top border-secondary">
+            {% if reporte.evidencias.all %}
+                <h5 class="text-info fw-semibold mb-3">📸 Evidencia Adjunta:</h5>
+                <div class="text-center p-2 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
+                    {% for evidencia in reporte.evidencias.all %}
+                        <img src="{{ evidencia.url_archivo.url }}" alt="Evidencia Hídrica" class="img-fluid rounded shadow border border-secondary" style="max-height: 500px; object-fit: cover; width: 100%;">
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="p-3 text-muted small text-center bg-dark bg-opacity-20 rounded border border-secondary border-opacity-20">
+                    🚫 No se adjuntaron fotografías de evidencia para este reporte.
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Botonera Inferior de Control -->
+        <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top border-secondary">
+            <a href="{% url 'reporte_listar' %}" class="btn btn-outline-light px-4 rounded-pill shadow-sm">
+                ⬅️ Volver al Panel
+            </a>
+            <div>
+                <a href="{% url 'reporte_editar' reporte.id_reporte %}" class="btn btn-info text-dark fw-bold px-3 rounded-pill me-2">
+                    Editar
+                </a>
+                <a href="{% url 'reporte_eliminar' reporte.id_reporte %}" class="btn btn-outline-danger px-3 rounded-pill">
+                    Eliminar
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

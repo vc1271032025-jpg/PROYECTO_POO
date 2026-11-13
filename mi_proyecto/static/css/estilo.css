@@ -1,0 +1,159 @@
+/* ==========================================================================
+   HOJA DE ESTILOS CENTRALIZADA DE ALTA VISIBILIDAD — ECOAGUA
+   ========================================================================== */
+
+body {
+    /* FONDO TOTAL CON DEGRADADO PARA ASEGURAR LEGIBILIDAD */
+    background: linear-gradient(rgba(15, 32, 67, 0.9), rgba(10, 24, 51, 0.95)), 
+                url('https://googleusercontent.com') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR MANUAL DE RESPALDO (Garantiza orden horizontal) */
+.custom-navbar {
+    background: rgba(10, 24, 51, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-navbar ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.custom-navbar a {
+    color: #ffffff !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* CONTENEDORES GLASSMORPHISM */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 180, 216, 0.35) !important;
+    border-color: rgba(0, 180, 216, 0.5);
+}
+
+/* ==========================================================================
+   CONFIGURACIÓN DE BOTONES FIJOS DE ALTA VISIBILIDAD (SIN HOVER)
+   ========================================================================== */
+
+/* 1. ENLACE VER DETALLE: Celeste neón brillante desde el inicio */
+.btn-link-visible {
+    color: #00f0ff !important; 
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem;
+    transition: all 0.2s ease;
+}
+.btn-link-visible:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #00f0ff;
+}
+
+/* 2. BOTÓN EDITAR: Amarillo Oro brillante con letras oscuras para contraste */
+.btn-editar-visible {
+    background-color: #ffd166 !important;
+    color: #0c1821 !important; 
+    font-weight: 650 !important;
+    border: none !important;
+    padding: 6px 16px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+}
+.btn-editar-visible:hover {
+    background-color: #ffe5a3 !important;
+    box-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+/* 3. BOTÓN ELIMINAR: Rojo Intenso con letras blancas fijas */
+.btn-eliminar-visible {
+    background-color: #ef476f !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 6px 16px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+}
+.btn-eliminar-visible:hover {
+    background-color: #ff6b8b !important;
+    box-shadow: 0 0 12px rgba(239, 71, 111, 0.6);
+}
+
+/* 4. BOTÓN CANCELAR: Fondo translúcido con texto Rojo Claro fijo */
+.btn-cancelar-visible {
+    background-color: rgba(255, 77, 109, 0.15) !important;
+    color: #ff4d6d !important;
+    border: 1px solid #ff4d6d !important;
+    font-weight: 600 !important;
+    padding: 8px 25px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+}
+.btn-cancelar-visible:hover {
+    background-color: #ff4d6d !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(255, 77, 109, 0.6) !important;
+}
+
+/* BOTÓN GUARDAR / AGREGAR */
+.btn-glow-primary {
+    background-color: #00b4d8 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 8px 25px !important;
+    border-radius: 50px !important;
+    border: none !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: all 0.3s ease !important;
+}
+.btn-glow-primary:hover {
+    background-color: #90e0ef !important;
+    color: #03045e !important;
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.7) !important;
+}
+
+.card-text {
+    color: #e2e8f0 !important;
+}
