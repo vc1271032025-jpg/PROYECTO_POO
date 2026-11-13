@@ -4,13 +4,14 @@ from django.utils import timezone
 from .models import ReporteAgua, Usuario, TipoIncidente, Ubicacion, Rol, Evidencia
 
 def reporte_inicio(request):
-    """
-    Controlador para renderizar la página de bienvenida e inicio del sistema.
-    """
     return render(request, 'reportes_agua/inicio.html')
 
 def reporte_listar(request):
-    reportes = ReporteAgua.objects.all().order_by('-fecha_registro')
+    try:
+        reportes = ReporteAgua.objects.all().order_by('-fecha_registro')
+    except Exception as e:
+        reportes = []
+        messages.warning(request, f"Aviso de base de datos: {e}")
     return render(request, 'reportes_agua/reporte_list.html', {'reportes': reportes})
 
 def reporte_detalle(request, pk):
@@ -19,7 +20,6 @@ def reporte_detalle(request, pk):
 
 def reporte_crear(request):
     if request.method == "POST":
-        # Asegurar dependencias base de nivel 1
         rol_base, _ = Rol.objects.get_or_create(id_rol=1, defaults={'nombre_rol': 'Administrador'})
         usuario_base, _ = Usuario.objects.get_or_create(
             id_usuario=1, 
@@ -30,7 +30,6 @@ def reporte_crear(request):
             defaults={'nombre_tipo': 'Fuga de Agua', 'descripcion': 'Ruptura de red distribución'}
         )
 
-        # PROCESAR UBICACIÓN DINÁMICA DEL USUARIO
         direccion = request.POST.get('direccion_exacta', 'Dirección no especificada')
         municipio = request.POST.get('municipio', 'Municipio General')
         
@@ -43,14 +42,11 @@ def reporte_crear(request):
             municipio=municipio
         )
 
-        # Autoincremento manual de Reporte
         ultimo_reporte = ReporteAgua.objects.all().order_by('-id_reporte').first()
         nuevo_id = (ultimo_reporte.id_reporte + 1) if ultimo_reporte else 1
 
-        # CORRECCIÓN DE FECHA: Usamos la hora local del sistema para evitar desfases de UTC
         fecha_actual = timezone.localtime(timezone.now())
 
-        # Crear el Reporte de Agua
         nuevo_reporte = ReporteAgua.objects.create(
             id_reporte=nuevo_id,
             fecha_registro=fecha_actual,
@@ -62,7 +58,6 @@ def reporte_crear(request):
             id_ubicacion=ubicacion_usuario
         )
 
-        # GUARDADO FÍSICO DE LA IMAGEN EN LA TABLA EVIDENCIA
         imagen_adjunta = request.FILES.get('imagen')
         if imagen_adjunta:
             ultima_evidencia = Evidencia.objects.all().order_by('-id_evidencia').first()

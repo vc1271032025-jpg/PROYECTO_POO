@@ -26,8 +26,5 @@ urlpatterns = [
     path('', lambda request: redirect('/reportes/'), name='raiz'),
 ]
 
-# ESTA LÍNEA ES OBLIGATORIA PARA QUE DJANGO RECONOZCA LA CARGA DE IMÁGENES LOCALES
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
