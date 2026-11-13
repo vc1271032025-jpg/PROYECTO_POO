@@ -7,7 +7,7 @@ class Rol(models.Model):
 
     class Meta:
         db_table = 'Rol'
-        managed = False
+        managed = True
 
     def __str__(self):
         return self.nombre_rol
@@ -20,7 +20,7 @@ class TipoIncidente(models.Model):
 
     class Meta:
         db_table = 'TipoIncidente'
-        managed = False
+        managed = True
 
     def __str__(self):
         return self.nombre_tipo
@@ -35,7 +35,7 @@ class Ubicacion(models.Model):
 
     class Meta:
         db_table = 'Ubicacion'
-        managed = False
+        managed = True
 
     def __str__(self):
         return f"{self.municipio} - {self.direccion_exacta[:30]}"
@@ -50,7 +50,7 @@ class Usuario(models.Model):
 
     class Meta:
         db_table = 'Usuario'
-        managed = False
+        managed = True
 
     def __str__(self):
         return self.nombre
@@ -68,7 +68,7 @@ class ReporteAgua(models.Model):
 
     class Meta:
         db_table = 'ReporteAgua'
-        managed = False
+        managed = True
 
     def __str__(self):
         return f"Reporte #{self.id_reporte} - {self.estado}"
@@ -84,4 +84,4 @@ class Evidencia(models.Model):
 
     class Meta:
         db_table = 'Evidencia'
-        managed = False # Respeta tu script original de base de datos
+        managed = True 
